@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_application_1/screens/FinalScreen.dart';
+import 'package:flutter_application_1/screens/PromptScreen.dart';
 import 'package:flutter_application_1/screens/restart_widget.dart';
 import 'package:flutter_application_1/screens/welcome_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -28,11 +29,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Camera Capture Example',
       theme: AppTheme.lightTheme,
-      initialRoute: '/final',
+      initialRoute: '/',
       routes: {
-        '/welcome': (context) => WelcomeScreen(),
-        '/': (context) => CameraCaptureScreen(userName: "userName"),
-        '/web': (context) => WebCameraScreen(userName: "userName"),
+        '/': (context) => WelcomeScreen(),
+        '/mob': (context) => CameraCaptureScreen(userName: "userName"),
+        '/camera': (context) => WebCameraScreen(userName: "userName"),
+        '/prompt': (context) => PromptScreen(),
         '/final': (context) =>
             FinalScreen(imageUrl: 'https://example.com/your-image.jpg'),
       },

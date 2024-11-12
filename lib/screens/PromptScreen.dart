@@ -20,63 +20,132 @@ class _PromptScreenState extends State<PromptScreen> {
   String? _responseImageUrl;
 
   final List<String> _prompts = [
-    'Vintage Style',
-    'Cyberpunk Look',
-    'Retro Aesthetic',
+    'prompt1',
+    'prompt2',
+    'prompt3',
+    'prompt4',
+    'prompt5',
+    'prompt6',
   ];
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions dynamically
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(title: Text("Select Prompt")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 20),
-            TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: 'Enter Custom Prompt',
-                border: OutlineInputBorder(),
+      body: Stack(
+        children: [
+          Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("background.png"),
+                fit: BoxFit.cover,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _selectedPrompt = value;
-                });
-              },
             ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _prompts.map((prompt) {
-                final isSelected = _selectedPrompt == prompt;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isSelected ? Colors.green : null,
-                      foregroundColor: isSelected ? Colors.white : null,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _selectedPrompt = prompt;
-                        _textController.clear();
-                      });
-                    },
-                    child: Text(prompt),
+          ),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(screenWidth * 0.04),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 430),
+                  Wrap(
+                    spacing: screenWidth * 0.03,
+                    runSpacing: screenHeight * 0.02,
+                    children: _prompts.map((prompt) {
+                      final isSelected = _selectedPrompt == prompt;
+                      print(_selectedPrompt);
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isSelected
+                              ? Colors.green
+                              : const Color.fromARGB(255, 118, 120, 121),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: screenHeight * 0.02,
+                            horizontal: screenWidth * 0.06,
+                          ),
+                          minimumSize:
+                              Size(screenWidth * 0.25, screenHeight * 0.07),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _selectedPrompt = prompt;
+                            _textController.clear();
+                          });
+                        },
+                        child: Text(
+                          prompt,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
+                  SizedBox(height: screenHeight * 0.04),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.8, // 80% of screen width
+                      height: MediaQuery.of(context).size.height *
+                          0.2, // 20% of screen height
+                      child: TextField(
+                        controller: _textController,
+                        style:
+                            TextStyle(fontSize: 40), // Set the font size here
+                        decoration: InputDecoration(
+                          hintText: 'Enter Custom Prompt',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.8),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedPrompt = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  // SizedBox(height: screenHeight * 0.04),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Color(0xFF4CAF50), // Set your custom background color
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.15,
+                        vertical: screenHeight * 0.025,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      fixedSize:
+                          Size(678, 140), // Set the fixed size of the button
+                    ),
+                    onPressed: _submitData,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                        color: Colors
+                            .white, // Optional: set text color to contrast with background
+                        fontSize: 40, // Optional: adjust font size
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitData,
-              child: Text("Submit"),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -84,89 +153,16 @@ class _PromptScreenState extends State<PromptScreen> {
   Future<void> _submitData() async {
     if (widget.capturedImage == null || _selectedPrompt.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please select a prompt ")),
+        SnackBar(content: Text("Please select a prompt or enter a custom one")),
       );
       return;
     }
 
     try {
-      // final response = await http.post(
-      //   Uri.parse('https://localhost:3000/swap'),
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: json.encode({
-      //     'image': widget.capturedImage,
-      //     'prompt': _selectedPrompt.isNotEmpty
-      //         ? _selectedPrompt
-      //         : _textController.text,
-      //   }),
-      // );
-
-      // if (response.statusCode == 200) {
-      //   final responseData = json.decode(response.body);
-      //   _responseImageUrl = responseData['imageUrl'];
-
-      //   if (_responseImageUrl != null) {
-      //     // Save the name and photo URL to Supabase
-      //     await _saveDataToSupabase(
-      //         widget.userName ?? 'Unknown User', _responseImageUrl!);
-
-      // Pop the selected prompt back to the previous screen
       Navigator.pop(context, _selectedPrompt);
-
-      // Optionally, you can navigate to the FinalScreen here if desired
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => FinalScreen(imageUrl: _responseImageUrl),
-      //   ),
-      // );
-      // } else {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //         content: Text("Failed to retrieve image URL from response")),
-      //   );
-      // }
-      // } else {
-      //   await _saveDataToSupabase(
-      //       widget.userName ?? 'Unknown User', "djsjkfsjkdfjdsbjk");
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //         content:
-      //             Text("Failed to submit data. Error: ${response.statusCode}")),
-      //   );
-      // }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("An error occurred: $error")),
-      );
-    }
-  }
-
-  // Function to save user data to Supabase
-  Future<void> _saveDataToSupabase(String name, String imageUrl) async {
-    try {
-      final response = await Supabase.instance.client
-          .from('users') // Replace 'users' with your Supabase table name
-          .insert({
-        'name': name,
-        'photo_url': imageUrl,
-      });
-
-      if (response.error != null) {
-        print("Error saving data to Supabase: ${response.error!.message}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to save data to Supabase")),
-        );
-      } else {
-        print("Data saved successfully to Supabase!");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Data saved successfully!")),
-        );
-      }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("An unexpected error occurred while saving data")),
       );
     }
   }

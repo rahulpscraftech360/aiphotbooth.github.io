@@ -83,6 +83,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/restart_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart'; // For QR Code generation
 
 class FinalScreen extends StatelessWidget {
@@ -117,63 +118,135 @@ class FinalScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Image Preview Section
+                      const SizedBox(height: 450),
                       Container(
-                        color: Colors.grey, // Placeholder for image
-                        width: 300,
-                        height: 300,
-                        child: imageUrl != null
-                            ? Image.network(
-                                imageUrl!,
-                                width: 300,
-                                height: 300,
-                                fit: BoxFit.cover,
-                              )
-                            : Center(child: Text("No Image Available")),
-                      ),
-                      SizedBox(height: 40),
-                      // QR Code Section
-                      if (imageUrl != null)
-                        // QrImage(
-                        //   data: imageUrl!,
-                        //   version: QrVersions.auto,
-                        //   size: 200.0,
-                        // ),
-                        QrImageView(
-                          data: imageUrl!,
-                          version: QrVersions.auto,
-                          size: 200.0,
+                        width: 600,
+                        height: 600,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                              20.0), // Set your desired radius
+                          child: Container(
+                            color: Colors.grey, // Placeholder for image
+                            child: imageUrl != null
+                                ? Image.network(
+                                    imageUrl!,
+                                    width: 600,
+                                    height: 600,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Center(child: Text("No Image Available")),
+                          ),
                         ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Scan the QR to Download Image",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
+
                       SizedBox(height: 40),
                       // Buttons Section (Restart, Retry)
-                      ElevatedButton(
-                        onPressed: () {
-                          // Restart the app or navigation logic here
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFF6A13),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 100, vertical: 15),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     // Restart the app or navigation logic here
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     backgroundColor: Color(0xFFFF6A13),
+                      //     padding: EdgeInsets.symmetric(
+                      //         horizontal: 100, vertical: 15),
+                      //   ),
+                      //   child: Text("Restart"),
+                      // ),
+                      // SizedBox(height: 20),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.pop(
+                      //         context); // Go back to the previous screen
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     backgroundColor: Color.fromARGB(255, 216, 216, 216),
+                      //     padding: EdgeInsets.symmetric(
+                      //         horizontal: 100, vertical: 15),
+                      //   ),
+                      //   child: Text("Retry"),
+                      // ),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize
+                              .min, // To center the buttons in the row
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                RestartWidget.restartApp(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFFFF6A13),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 100, vertical: 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.home,
+                                size: 80,
+                              ), // Icon for restart
+                            ),
+                            SizedBox(
+                                width: 20), // Space between buttons (optional)
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(
+                                    context); // Go back to the previous screen
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 216, 216, 216),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 100, vertical: 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.replay,
+                                size: 80,
+                              ), // Icon for retry
+                            ),
+                          ],
                         ),
-                        child: Text("Restart"),
                       ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(
-                              context); // Go back to the previous screen
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 216, 216, 216),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 100, vertical: 15),
+                      SizedBox(height: 40),
+
+                      // QR Code Section
+                      if (imageUrl != null)
+                        Container(
+                          color:
+                              Colors.white, // Set the background color to white
+                          padding: EdgeInsets.all(
+                              10), // Optional padding to give some space around the QR code
+                          child: QrImageView(
+                            data: 'gdbfgubsuigbuidbviudfbuidfbvidbfb',
+                            version: QrVersions.auto,
+                            size: 300.0,
+                          ),
                         ),
-                        child: Text("Retry"),
-                      ),
+
+                      Center(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize
+                                  .min, // To center the buttons in the row
+                              children: [
+                            SizedBox(height: 10),
+                            Text(
+                              "Scan the QR to ",
+                              style: TextStyle(
+                                  color: Color(0xFFFF6A13), fontSize: 40),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              " Download Image",
+                              style: TextStyle(
+                                  color: Color(0xFFFF6A13), fontSize: 40),
+                            ),
+                          ]))
                     ],
                   ),
                 ),

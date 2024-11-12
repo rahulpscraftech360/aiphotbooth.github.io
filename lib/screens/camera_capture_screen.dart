@@ -124,7 +124,6 @@ class _CameraCaptureScreenState extends State<CameraCaptureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Capture Image (Android/iOS)")),
       body: SingleChildScrollView(
         // Wrap the content with SingleChildScrollView to handle overflow
         child: Padding(

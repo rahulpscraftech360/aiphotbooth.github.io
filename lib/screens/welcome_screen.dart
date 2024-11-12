@@ -19,20 +19,40 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CameraCaptureScreen(),
+            // builder: (context) => CameraCaptureScreen(userName: userName),
+            builder: (context) => WebCameraScreen(userName: userName),
           ),
         );
       } else {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WebCameraScreen(),
+            builder: (context) => WebCameraScreen(userName: userName),
           ),
         );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter your name')),
+        SnackBar(
+          content: Text(
+            'Please enter your name',
+            style: TextStyle(fontSize: 64), // Adjust font size for readability
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20, // Horizontal padding
+            vertical: 15, // Vertical padding for added height
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40), // Rounded corners
+          ),
+          behavior:
+              SnackBarBehavior.floating, // Floating style for better visibility
+          margin: EdgeInsets.symmetric(
+              horizontal: 50, vertical: 40), // Screen margins
+          // Optional: change background color
+
+          duration: Duration(seconds: 3), // Control duration as needed
+        ),
       );
     }
   }
@@ -76,28 +96,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         SizedBox(height: 40),
                         SizedBox(
-                          width: 667,
-                          height: 130,
+                          width: 668,
+                          height: 138,
                           child: TextField(
                             controller: _nameController,
                             decoration: InputDecoration(
                               hintText: 'Enter your name',
                               hintStyle:
-                                  TextStyle(color: Colors.orange, fontSize: 50),
+                                  TextStyle(color: Colors.orange, fontSize: 60),
                               filled: true,
                               fillColor: const Color.fromARGB(33, 48, 48, 48),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(40.0),
                                 borderSide:
                                     BorderSide(color: Colors.white, width: 2.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(40.0),
                                 borderSide:
                                     BorderSide(color: Colors.white, width: 2.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(40.0),
                                 borderSide:
                                     BorderSide(color: Colors.white, width: 2.0),
                               ),
@@ -108,15 +128,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         SizedBox(height: 20),
                         SizedBox(height: 20),
                         Container(
-                          width: 667,
-                          height: 120,
+                          width: 668,
+                          height: 138,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                   'button.png'), // Replace with your image path
                               fit: BoxFit.cover,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(40),
                           ),
                           child: ElevatedButton(
                             onPressed: _continue,
@@ -147,15 +167,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Positioned(
                   top: 16,
                   left: 16,
-                  child:
-                      Image.asset('logo1.png', height: 100), // Left logo path
+                  child: Image.asset('logo1.png', height: 45), // Left logo path
                 ),
                 // Top Right Logo
                 Positioned(
                   top: 16,
                   right: 16,
                   child:
-                      Image.asset('logo2.png', height: 100), // Right logo path
+                      Image.asset('logo2.png', height: 45), // Right logo path
                 ),
               ],
             ),

@@ -67,6 +67,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter_application_1/screens/PromptScreen.dart'; // Import PromptScreen
 
 class CameraCaptureScreen extends StatefulWidget {
+  final String userName;
+
+  CameraCaptureScreen({required this.userName});
   @override
   _CameraCaptureScreenState createState() => _CameraCaptureScreenState();
 }

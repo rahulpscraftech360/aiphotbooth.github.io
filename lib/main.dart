@@ -25,13 +25,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Camera Capture Example',
       theme: AppTheme.lightTheme,
-      initialRoute: '/welcome',
+      initialRoute: '/final',
       routes: {
         '/welcome': (context) => WelcomeScreen(),
-        '/': (context) => CameraCaptureScreen(),
-        '/web': (context) => WebCameraScreen(),
+        '/': (context) => CameraCaptureScreen(userName: "userName"),
+        '/web': (context) => WebCameraScreen(userName: "userName"),
         '/final': (context) =>
             FinalScreen(imageUrl: 'https://example.com/your-image.jpg'),
       },

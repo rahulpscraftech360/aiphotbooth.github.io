@@ -100,9 +100,14 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
                           ])
                     : _isLoading
                         ? Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.blue),
+                            child: SizedBox(
+                              width: 100.0, // Adjust the width as needed
+                              height: 100.0, // Adjust the height as needed
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  const Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
                             ),
                           ) // Show loading indicator when loading
                         : Column(
@@ -300,8 +305,8 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please capture an image and select a prompt!',
-            style: TextStyle(fontSize: 64), // Adjust font size for readability
+            'Please select a prompt!',
+            style: TextStyle(fontSize: 40), // Adjust font size for readability
           ),
           padding: EdgeInsets.symmetric(
             horizontal: 20, // Horizontal padding
@@ -354,9 +359,9 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
             ),
           );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Failed to retrieve image URL from response"),
-          ));
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //   content: Text("Failed to retrieve image URL from response"),
+          // ));
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -365,17 +370,17 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
           );
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Failed to submit data. Error: ${response.statusCode}"),
-        ));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text("Failed to submit data. Error: ${response.statusCode}"),
+        // ));
       }
     } catch (error) {
       setState(() {
         _isLoading = false; // Stop loading animation
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("An error occurred: $error"),
-      ));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text("An error occurred: $error"),
+      // ));
       _saveDataToSupabase(widget.userName,
           "https://storage.googleapis.com/ai-photo-7495c.appspot.com/ig-ai-images/34177387-50fb-4ae4-9053-3d6d0c17d85e.png?Expires=1731486699&GoogleAccessId=firebase-adminsdk-jmozy%40ai-photo-7495c.iam.gserviceaccount.com&Signature=RKrdM660fmQul6SbGiJHG0mN%2Bzd%2BYUafM9OfgJMOhfB9wm98XHkQLi5JtyKQAsvK%2BkOKBdT0v55S5nyQeX9uTc%2B1Rj7vghKG2ZTIzwobQ2Z1qNf7r%2Bc2Xqhlrm6GCvIgDTiJJdq2eZP4WiETEcl5tQ2wixIxTeD%2BtClR%2BaH%2B61tCu62MeiTop5n8U9iteEG%2F%2F2SsyYT%2BHdGsDfm4Ap56nEZT5vF%2FSo3L2FZ52TpXS1yJNqPQz8g%2FCRPvK68GqlVMytAoPm5NCma7DsHv5t14VA8jab5HUXAHKVkwQuD8DH2KgY1WDIUmPe74SY10ANsqdzBV9R27fm2kYlB8q7DIJg%3D%3D");
       Navigator.push(
@@ -400,20 +405,36 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
 
       if (response.error != null) {
         print("Error saving data to Supabase: ${response.error!.message}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to save data to Supabase")),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text("Failed to save data to Supabase")),
+        // );
       } else {
         print("Data saved successfully to Supabase!");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Data saved successfully!")),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text("Data saved successfully!")),
+        // );
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("An unexpected error occurred while saving data")),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'An unexpected error occurred while saving data',
+          style: TextStyle(fontSize: 40), // Adjust font size for readability
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20, // Horizontal padding
+          vertical: 15, // Vertical padding for added height
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40), // Rounded corners
+        ),
+        behavior:
+            SnackBarBehavior.floating, // Floating style for better visibility
+        margin: EdgeInsets.symmetric(
+            horizontal: 50, vertical: 40), // Screen margins
+        // Optional: change background color
+
+        duration: Duration(seconds: 3), // Control duration as needed
+      ));
     }
   }
 }

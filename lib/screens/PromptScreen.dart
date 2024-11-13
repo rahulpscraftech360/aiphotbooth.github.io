@@ -152,8 +152,30 @@ class _PromptScreenState extends State<PromptScreen> {
 
   Future<void> _submitData() async {
     if (widget.capturedImage == null || _selectedPrompt.isEmpty) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text("Please select a prompt or enter a custom one")),
+      // );
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please select a prompt or enter a custom one")),
+        SnackBar(
+          content: Text(
+            'Please select a prompt or enter a custom one',
+            style: TextStyle(fontSize: 40), // Adjust font size for readability
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20, // Horizontal padding
+            vertical: 15, // Vertical padding for added height
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40), // Rounded corners
+          ),
+          behavior:
+              SnackBarBehavior.floating, // Floating style for better visibility
+          margin: EdgeInsets.symmetric(
+              horizontal: 50, vertical: 40), // Screen margins
+          // Optional: change background color
+
+          duration: Duration(seconds: 3), // Control duration as needed
+        ),
       );
       return;
     }

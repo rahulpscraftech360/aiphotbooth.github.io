@@ -209,6 +209,36 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
                                 ),
                               ),
                               SizedBox(height: 20),
+                              // ElevatedButton(
+                              //   onPressed: _aiMagic,
+                              //   style: ElevatedButton.styleFrom(
+                              //     backgroundColor: Color.fromARGB(255, 255, 255,
+                              //         255), // Custom button color
+                              //     padding: EdgeInsets.symmetric(
+                              //         horizontal: 50,
+                              //         vertical: 25), // Adjusted padding
+                              //     fixedSize: Size(678,
+                              //         138), // Set fixed size for the button
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(
+                              //           30), // Rounded corners for the button
+                              //     ),
+                              //   ),
+                              //   child: const Row(
+                              //     mainAxisAlignment: MainAxisAlignment
+                              //         .center, // Centers the content
+                              //     children: [
+                              //       Text(
+                              //         "AI Magic",
+                              //         style: TextStyle(
+                              //             fontSize: 60, // Text size
+                              //             color: (Color.fromARGB(255, 0, 0,
+                              //                 0)) // Text color to match the icon
+                              //             ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               ElevatedButton(
                                 onPressed: _aiMagic,
                                 style: ElevatedButton.styleFrom(
@@ -228,13 +258,22 @@ class _WebCameraScreenState extends State<WebCameraScreen> {
                                   mainAxisAlignment: MainAxisAlignment
                                       .center, // Centers the content
                                   children: [
+                                    Image(
+                                      image: AssetImage(
+                                          'icon.png'), // Path to your icon image
+                                      width: 60, // Adjust icon width
+                                      height: 60, // Adjust icon height
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            30), // Space between icon and text
                                     Text(
                                       "AI Magic",
                                       style: TextStyle(
-                                          fontSize: 60, // Text size
-                                          color: (Color.fromARGB(255, 0, 0,
-                                              0)) // Text color to match the icon
-                                          ),
+                                        fontSize: 60, // Text size
+                                        color: Color.fromARGB(255, 0, 0,
+                                            0), // Text color to match the icon
+                                      ),
                                     ),
                                   ],
                                 ),
